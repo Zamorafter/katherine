@@ -1,0 +1,35 @@
+body {
+    background-color: #fff9fb;
+    font-family: 'Poppins', sans-serif;
+}
+h1 {
+    color: #d63384;
+    font-weight: 300;
+}
+.btn-outline-success {
+    border-color: #d63384;
+    color: #d63384;
+}
+.btn-outline-success:hover {
+    background-color: #d63384;
+    color: white;
+}
+.btn-danger {
+    background-color: #f8b4d9;
+    border-color: #f8b4d9;
+    color: #fff;
+}
+.btn-danger.disabled {
+    opacity: 0.6;
+}
+.modal-content {
+    border-radius: 20px;
+}
+.modal-header {
+    background-color: #d63384;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}
+.btn-close {
+    filter: invert(1);
+}
