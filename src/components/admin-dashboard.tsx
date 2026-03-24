@@ -151,7 +151,7 @@ export function AdminDashboard({ initialAppointments, services }: Props) {
                 className={styles.logo}
                 height={76}
                 priority
-                src="/studio-seven-k-logo.svg"
+                src="/studio-seven-k-logo.jpg"
                 width={76}
               />
               <div>

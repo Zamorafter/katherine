@@ -173,7 +173,7 @@ export function BookingPage({
                 className={styles.logoImage}
                 height={92}
                 priority
-                src="/studio-seven-k-logo.svg"
+                src="/studio-seven-k-logo.jpg"
                 width={92}
               />
             </div>
