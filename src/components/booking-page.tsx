@@ -177,7 +177,7 @@ export function BookingPage({
                 width={92}
               />
             </div>
-            <span className={styles.eyebrow}>Beauty booking studio</span>
+            <span className={styles.eyebrow}>Studios Seven K</span>
             <h1 className={styles.title}>Reserva tu espacio para sentirte divina.</h1>
             <p className={styles.lead}>
               Agenda sin crear cuenta, elige tus servicios favoritos y revisa la
