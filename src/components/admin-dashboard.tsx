@@ -355,7 +355,14 @@ export function AdminDashboard({ initialAppointments, services }: Props) {
                           }
                           type="checkbox"
                         />
-                        <span style={{ background: `${service.accentColor}1f` }}>
+                        <span
+                          style={
+                            {
+                              "--service-accent": service.accentColor,
+                              background: `${service.accentColor}1f`,
+                            } as React.CSSProperties
+                          }
+                        >
                           {service.name}
                         </span>
                       </label>

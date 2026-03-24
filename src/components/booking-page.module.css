@@ -354,11 +354,12 @@
 }
 
 .servicePill input:checked + span {
-  border-color: rgba(202, 79, 134, 0.24);
+  background: color-mix(in srgb, var(--service-accent, #ca4f86) 22%, white);
+  border-color: color-mix(in srgb, var(--service-accent, #ca4f86) 58%, white);
   box-shadow:
-    0 12px 24px rgba(202, 79, 134, 0.18),
+    0 12px 24px color-mix(in srgb, var(--service-accent, #ca4f86) 22%, transparent),
     inset 0 0 0 2px rgba(255, 255, 255, 0.72);
-  color: #4d2840;
+  color: color-mix(in srgb, var(--service-accent, #ca4f86) 58%, #2d1725);
   transform: translateY(-1px);
 }
 
@@ -370,8 +371,8 @@
   width: 1.35rem;
   height: 1.35rem;
   border-radius: 999px;
-  background: rgba(202, 79, 134, 0.18);
-  color: #8f355c;
+  background: color-mix(in srgb, var(--service-accent, #ca4f86) 18%, white);
+  color: color-mix(in srgb, var(--service-accent, #ca4f86) 70%, #3b1d2f);
   font-size: 0.82rem;
   font-weight: 900;
 }
