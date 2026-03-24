@@ -37,6 +37,21 @@
   padding: 2rem;
 }
 
+.logoBadge {
+  width: fit-content;
+  padding: 0.45rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 16px 32px rgba(188, 140, 160, 0.18);
+}
+
+.logoImage {
+  display: block;
+  width: 92px;
+  height: 92px;
+  border-radius: 22px;
+}
+
 .eyebrow {
   display: inline-flex;
   padding: 0.45rem 0.85rem;

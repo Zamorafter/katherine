@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition } from "react";
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import styles from "@/components/admin-dashboard.module.css";
@@ -37,9 +38,8 @@ function toEditable(appointment: Appointment): EditableAppointment {
 
 export function AdminDashboard({ initialAppointments, services }: Props) {
   const router = useRouter();
-  const [selected, setSelected] = useState<EditableAppointment | null>(
-    initialAppointments[0] ? toEditable(initialAppointments[0]) : null,
-  );
+  const editorRef = useRef<HTMLElement | null>(null);
+  const [selected, setSelected] = useState<EditableAppointment | null>(null);
   const [message, setMessage] = useState("Revisa y actualiza la agenda desde aqui.");
   const [isPending, startTransition] = useTransition();
 
@@ -83,6 +83,7 @@ export function AdminDashboard({ initialAppointments, services }: Props) {
   function openEditor(appointment: Appointment) {
     setSelected(toEditable(appointment));
     setMessage(`Editando la cita de ${appointment.firstName} ${appointment.lastName}.`);
+    editorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   async function handleSave(event: React.FormEvent<HTMLFormElement>) {
@@ -143,9 +144,21 @@ export function AdminDashboard({ initialAppointments, services }: Props) {
     <div className={styles.page}>
       <div className={styles.shell}>
         <header className={styles.header}>
-          <div>
-            <p className={styles.eyebrow}>Panel administradora</p>
-            <h1 className={styles.title}>Tu agenda viva de la semana</h1>
+          <div className={styles.headerContent}>
+            <div className={styles.brandRow}>
+              <Image
+                alt="Studio Seven K"
+                className={styles.logo}
+                height={76}
+                priority
+                src="/studio-seven-k-logo.svg"
+                width={76}
+              />
+              <div>
+                <p className={styles.eyebrow}>Panel administradora</p>
+                <h1 className={styles.title}>Tu agenda viva de la semana</h1>
+              </div>
+            </div>
             <p className={styles.lead}>
               Cada cambio de la pagina publica aparece aqui para que puedas hacer
               seguimiento, reorganizar horarios y liberar cupos cuando sea necesario.
@@ -181,7 +194,12 @@ export function AdminDashboard({ initialAppointments, services }: Props) {
             <div className={styles.list}>
               {initialAppointments.length ? (
                 initialAppointments.map((appointment) => (
-                  <article className={styles.appointmentItem} key={appointment.id}>
+                  <article
+                    className={`${styles.appointmentItem} ${
+                      selected?.id === appointment.id ? styles.appointmentItemActive : ""
+                    }`}
+                    key={appointment.id}
+                  >
                     <div className={styles.appointmentTop}>
                       <div>
                         <p className={styles.name}>
@@ -226,7 +244,7 @@ export function AdminDashboard({ initialAppointments, services }: Props) {
             </div>
           </article>
 
-          <aside className={styles.editorCard}>
+          <aside className={styles.editorCard} ref={editorRef}>
             <h2 className={styles.editorTitle}>Editor de cita</h2>
             <p className={styles.editorLead}>
               Puedes mover fecha, horario, servicios o marcar la reserva como cancelada.
@@ -234,6 +252,10 @@ export function AdminDashboard({ initialAppointments, services }: Props) {
 
             {selected ? (
               <form className={styles.form} onSubmit={handleSave}>
+                <div className={styles.editorNotice}>
+                  Editando a {selected.firstName} {selected.lastName} para el {selected.date} a
+                  las {selected.timeSlot}.
+                </div>
                 <label className={styles.field}>
                   Nombre
                   <input

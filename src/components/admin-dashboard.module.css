@@ -18,6 +18,22 @@
   align-items: flex-start;
 }
 
+.headerContent {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  border-radius: 22px;
+  box-shadow: 0 16px 32px rgba(188, 140, 160, 0.16);
+}
+
 .eyebrow {
   color: #8a536c;
   font-weight: 700;
@@ -33,7 +49,6 @@
 }
 
 .lead {
-  margin-top: 0.8rem;
   color: #755467;
   line-height: 1.6;
   max-width: 60ch;
@@ -128,6 +143,11 @@
   gap: 0.65rem;
 }
 
+.appointmentItemActive {
+  border-color: rgba(202, 79, 134, 0.38);
+  box-shadow: 0 14px 26px rgba(202, 79, 134, 0.12);
+}
+
 .appointmentTop,
 .appointmentBottom,
 .editorActions {
@@ -184,6 +204,13 @@
   color: #8a536c;
 }
 
+.selectButton:hover,
+.logoutButton:hover,
+.saveButton:hover,
+.dangerButton:hover {
+  transform: translateY(-2px);
+}
+
 .editorTitle {
   color: #44263a;
   font-size: 1.4rem;
@@ -199,6 +226,14 @@
   margin-top: 1rem;
   display: grid;
   gap: 1rem;
+}
+
+.editorNotice {
+  border-radius: 18px;
+  padding: 0.95rem 1rem;
+  background: #fff3f6;
+  color: #8a536c;
+  font-weight: 700;
 }
 
 .field {
@@ -251,5 +286,9 @@
   .summaryGrid,
   .content {
     grid-template-columns: 1fr;
+  }
+
+  .brandRow {
+    align-items: flex-start;
   }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 
 import styles from "@/components/booking-page.module.css";
@@ -166,6 +167,16 @@ export function BookingPage({
       <div className={styles.shell}>
         <section className={styles.hero}>
           <article className={styles.heroCard}>
+            <div className={styles.logoBadge}>
+              <Image
+                alt="Studio Seven K"
+                className={styles.logoImage}
+                height={92}
+                priority
+                src="/studio-seven-k-logo.svg"
+                width={92}
+              />
+            </div>
             <span className={styles.eyebrow}>Beauty booking studio</span>
             <h1 className={styles.title}>Reserva tu espacio para sentirte divina.</h1>
             <p className={styles.lead}>
