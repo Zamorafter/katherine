@@ -23,6 +23,39 @@ type FormState = {
 
 const EMPTY_MESSAGE = "Selecciona un horario disponible para empezar.";
 
+function WhatsAppIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path
+        d="M19.05 4.94A9.93 9.93 0 0 0 12 2a9.98 9.98 0 0 0-8.74 14.8L2 22l5.33-1.22A10 10 0 1 0 19.05 4.94Zm-7.05 15.38a8.28 8.28 0 0 1-4.22-1.15l-.3-.18-3.16.73.75-3.08-.2-.32a8.31 8.31 0 1 1 7.13 4Zm4.56-6.22c-.25-.12-1.49-.73-1.72-.82-.23-.08-.4-.12-.57.13-.16.24-.65.82-.79.99-.15.16-.29.18-.54.06-.25-.12-1.05-.39-2-1.24-.74-.65-1.24-1.45-1.39-1.7-.15-.24-.01-.37.11-.49.11-.11.25-.29.37-.43.12-.15.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.57-1.36-.78-1.87-.2-.48-.41-.41-.57-.42h-.49c-.16 0-.43.06-.66.31-.22.24-.86.84-.86 2.06s.88 2.39 1 2.55c.12.16 1.73 2.64 4.19 3.71.58.25 1.04.4 1.39.51.58.18 1.11.15 1.53.09.47-.07 1.49-.61 1.7-1.2.21-.59.21-1.09.15-1.2-.06-.11-.22-.18-.47-.31Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path
+        d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm8.9 1.35a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.8A3.2 3.2 0 1 0 12 15.2 3.2 3.2 0 0 0 12 8.8Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function TikTokIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path
+        d="M14.55 2h2.33a4.8 4.8 0 0 0 1.44 3.09A4.83 4.83 0 0 0 21 6.41v2.36a7.18 7.18 0 0 1-4.1-1.28v6.13a6.12 6.12 0 1 1-6.12-6.12c.31 0 .63.03.93.08v2.4a3.7 3.7 0 0 0-.93-.12 3.76 3.76 0 1 0 3.77 3.76V2Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export function BookingPage({
   initialAvailability,
   services,
@@ -175,6 +208,9 @@ export function BookingPage({
               rel="noreferrer"
               target="_blank"
             >
+              <span className={styles.socialIcon}>
+                <WhatsAppIcon />
+              </span>
               Hablar por WhatsApp
             </a>
 
@@ -185,6 +221,9 @@ export function BookingPage({
                 rel="noreferrer"
                 target="_blank"
               >
+                <span className={styles.socialIcon}>
+                  <InstagramIcon />
+                </span>
                 Instagram
               </a>
               <a
@@ -193,6 +232,9 @@ export function BookingPage({
                 rel="noreferrer"
                 target="_blank"
               >
+                <span className={styles.socialIcon}>
+                  <TikTokIcon />
+                </span>
                 TikTok
               </a>
             </div>

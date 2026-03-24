@@ -134,8 +134,13 @@
 
 .socialLink,
 .whatsAppButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
   padding: 0.85rem 1.2rem;
   transition: transform 120ms ease, box-shadow 120ms ease;
+  text-decoration: none;
 }
 
 .socialLink {
@@ -148,6 +153,20 @@
   color: white;
   background: linear-gradient(135deg, #4fc79b 0%, #168f67 100%);
   box-shadow: 0 16px 30px rgba(22, 143, 103, 0.26);
+}
+
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
+}
+
+.socialIcon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .socialLink:hover,
