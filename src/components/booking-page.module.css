@@ -1,0 +1,393 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(255, 221, 228, 0.9), transparent 32%),
+    radial-gradient(circle at left center, rgba(250, 231, 199, 0.7), transparent 28%),
+    linear-gradient(180deg, #fff7f7 0%, #fff1ef 50%, #fffaf6 100%);
+  color: #44263a;
+}
+
+.shell {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.heroCard,
+.sideCard,
+.agendaCard,
+.panelCard,
+.emptyCard,
+.notice {
+  border: 1px solid rgba(138, 83, 108, 0.14);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 22px 60px rgba(188, 140, 160, 0.16);
+  backdrop-filter: blur(14px);
+}
+
+.heroCard {
+  border-radius: 32px;
+  padding: 2rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: #fff1f3;
+  color: #8a536c;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 1rem;
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 0.92;
+  font-weight: 600;
+}
+
+.lead {
+  margin-top: 1rem;
+  max-width: 52ch;
+  color: #755467;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.chipRow,
+.socialRow,
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.chipRow {
+  margin-top: 1.5rem;
+}
+
+.chip,
+.socialLink,
+.whatsAppButton {
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.chip {
+  border: 1px solid rgba(138, 83, 108, 0.16);
+  padding: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.sideCard {
+  border-radius: 28px;
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.kicker {
+  color: #8a536c;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+}
+
+.weekLabel {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.smallText {
+  color: #755467;
+  line-height: 1.6;
+}
+
+.legendTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  background: #fff4f4;
+  color: #6f485c;
+}
+
+.heart {
+  font-size: 1rem;
+}
+
+.socialRow {
+  margin-top: 0.5rem;
+}
+
+.socialLink,
+.whatsAppButton {
+  padding: 0.85rem 1.2rem;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.socialLink {
+  border: 1px solid rgba(138, 83, 108, 0.16);
+  color: #7d4b66;
+  background: white;
+}
+
+.whatsAppButton {
+  color: white;
+  background: linear-gradient(135deg, #4fc79b 0%, #168f67 100%);
+  box-shadow: 0 16px 30px rgba(22, 143, 103, 0.26);
+}
+
+.socialLink:hover,
+.whatsAppButton:hover,
+.slotButton:hover,
+.reserveButton:hover,
+.secondaryButton:hover,
+.primaryButton:hover {
+  transform: translateY(-2px);
+}
+
+.agendaHeader {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+}
+
+.sectionTitle {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 600;
+}
+
+.sectionLead {
+  margin-top: 0.55rem;
+  color: #755467;
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+.agendaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.agendaCard {
+  border-radius: 26px;
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.todayPill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.82rem;
+  background: #ffe7ee;
+  color: #9a506d;
+  font-weight: 700;
+}
+
+.dayTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.slotList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.slotButton {
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  padding: 1rem;
+  text-align: left;
+  cursor: pointer;
+  background: linear-gradient(135deg, #fff8fb 0%, #ffffff 100%);
+  border: 1px solid rgba(138, 83, 108, 0.12);
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.slotBooked {
+  cursor: not-allowed;
+  border-color: rgba(235, 105, 149, 0.28);
+  background: linear-gradient(135deg, #fff0f5 0%, #fff8fb 100%);
+}
+
+.slotTime {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.slotMeta {
+  margin-top: 0.4rem;
+  color: #866277;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.panelCard {
+  margin-top: 2rem;
+  border-radius: 32px;
+  padding: 1.5rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field,
+.servicesField {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.field span,
+.servicesField span {
+  font-weight: 700;
+}
+
+.field input,
+.field select {
+  border: 1px solid rgba(138, 83, 108, 0.18);
+  border-radius: 16px;
+  padding: 0.95rem 1rem;
+  background: white;
+  color: #44263a;
+  font: inherit;
+}
+
+.servicesField {
+  grid-column: 1 / -1;
+}
+
+.servicesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.servicePill {
+  position: relative;
+  cursor: pointer;
+}
+
+.servicePill input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.servicePill span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(138, 83, 108, 0.16);
+  padding: 0.8rem 1rem;
+  background: #fffdfd;
+}
+
+.servicePill input:checked + span {
+  border-color: transparent;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.65);
+}
+
+.actions {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.reserveButton,
+.secondaryButton,
+.primaryButton {
+  border: none;
+  border-radius: 999px;
+  padding: 0.95rem 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reserveButton,
+.primaryButton {
+  color: white;
+  background: linear-gradient(135deg, #ea6fa4 0%, #ca4f86 100%);
+  box-shadow: 0 16px 36px rgba(202, 79, 134, 0.25);
+}
+
+.secondaryButton {
+  background: #fff4f4;
+  color: #7f4d65;
+}
+
+.statusMessage {
+  min-height: 1.25rem;
+  color: #8a536c;
+  font-weight: 600;
+}
+
+.notice {
+  margin-top: 1.5rem;
+  border-radius: 24px;
+  padding: 1rem 1.2rem;
+  color: #7c4e63;
+}
+
+.emptyCard {
+  border-radius: 28px;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .hero,
+  .agendaGrid,
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .shell {
+    width: min(100% - 1rem, 1180px);
+    padding-top: 1rem;
+  }
+
+  .heroCard,
+  .sideCard,
+  .panelCard,
+  .agendaCard {
+    border-radius: 24px;
+  }
+
+  .title {
+    font-size: 2.6rem;
+  }
+}
