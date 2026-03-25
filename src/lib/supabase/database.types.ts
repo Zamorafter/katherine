@@ -8,9 +8,11 @@ export type Database = {
           id: string;
           first_name: string;
           last_name: string;
+          phone_number: string;
           appointment_date: string;
           time_slot: string;
           status: "booked" | "cancelled";
+          nail_area: "manos" | "pies" | null;
           week_start: string;
           created_at: string;
           updated_at: string;
@@ -19,9 +21,11 @@ export type Database = {
           id?: string;
           first_name: string;
           last_name: string;
+          phone_number: string;
           appointment_date: string;
           time_slot: string;
           status?: "booked" | "cancelled";
+          nail_area?: "manos" | "pies" | null;
           week_start: string;
           created_at?: string;
           updated_at?: string;
@@ -30,9 +34,11 @@ export type Database = {
           id?: string;
           first_name?: string;
           last_name?: string;
+          phone_number?: string;
           appointment_date?: string;
           time_slot?: string;
           status?: "booked" | "cancelled";
+          nail_area?: "manos" | "pies" | null;
           week_start?: string;
           created_at?: string;
           updated_at?: string;

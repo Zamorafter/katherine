@@ -11,6 +11,16 @@
   padding: 2rem 0 4rem;
 }
 
+.alertBanner {
+  margin-bottom: 1rem;
+  border-radius: 22px;
+  padding: 1rem 1.15rem;
+  background: linear-gradient(135deg, #fff3df 0%, #ffe8f2 100%);
+  color: #8a536c;
+  font-weight: 700;
+  border: 1px solid rgba(202, 79, 134, 0.18);
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -121,6 +131,13 @@
   gap: 1rem;
 }
 
+.managementGrid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .tableCard,
 .editorCard,
 .emptyCard {
@@ -168,6 +185,11 @@
 .statusLine,
 .message {
   color: #7d5c6d;
+}
+
+.metaGrid {
+  display: grid;
+  gap: 0.2rem;
 }
 
 .serviceRow {
@@ -259,6 +281,43 @@
   gap: 0.7rem;
 }
 
+.nailAreaGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.nailAreaOption {
+  position: relative;
+  cursor: pointer;
+}
+
+.nailAreaOption input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.nailAreaOption span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7rem;
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(138, 83, 108, 0.16);
+  background: #fffdfd;
+  color: #6b4459;
+  font-weight: 700;
+}
+
+.nailAreaOption input:checked + span {
+  border-color: rgba(202, 79, 134, 0.26);
+  background: #fff2f6;
+  color: #8f355c;
+  box-shadow: 0 12px 24px rgba(202, 79, 134, 0.14);
+}
+
 .serviceOption {
   position: relative;
   cursor: pointer;
@@ -311,9 +370,33 @@
   font-weight: 900;
 }
 
+.adminList {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.adminRow {
+  border-radius: 20px;
+  padding: 0.95rem 1rem;
+  background: #fff8fb;
+  border: 1px solid rgba(138, 83, 108, 0.14);
+}
+
+.adminEmail {
+  font-weight: 700;
+  color: #44263a;
+}
+
+.adminMeta {
+  margin-top: 0.2rem;
+  color: #7d5c6d;
+}
+
 @media (max-width: 960px) {
   .summaryGrid,
-  .content {
+  .content,
+  .managementGrid {
     grid-template-columns: 1fr;
   }
 

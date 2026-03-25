@@ -6,13 +6,16 @@ export type Service = {
 };
 
 export type AppointmentStatus = "booked" | "cancelled";
+export type NailArea = "manos" | "pies";
 
 export type AppointmentCreateInput = {
   firstName: string;
   lastName: string;
+  phoneNumber: string;
   date: string;
   timeSlot: string;
   serviceIds: string[];
+  nailArea: NailArea | null;
 };
 
 export type AdminAppointmentUpdateInput = AppointmentCreateInput & {
@@ -23,12 +26,21 @@ export type Appointment = {
   id: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
   date: string;
   timeSlot: string;
   status: AppointmentStatus;
+  nailArea: NailArea | null;
   createdAt: string;
   updatedAt: string;
   services: Service[];
+};
+
+export type AdminUser = {
+  id: string;
+  email: string;
+  createdAt: string;
+  lastSignInAt: string | null;
 };
 
 export type AvailabilitySlot = {

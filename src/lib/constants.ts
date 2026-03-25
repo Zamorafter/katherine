@@ -22,13 +22,13 @@ export const DEFAULT_SERVICES = [
   {
     id: "default-nails",
     slug: "unas",
-    name: "Unas",
+    name: "Uñas",
     accentColor: "#f28cb4",
   },
   {
     id: "default-lashes",
     slug: "pestanas",
-    name: "Pestanas",
+    name: "Pestañas",
     accentColor: "#f7b267",
   },
   {
@@ -45,3 +45,8 @@ export const APPOINTMENT_STATUSES = {
 } as const;
 
 export const BOOKING_CHANNEL = "appointments-live";
+
+export const STATUS_LABELS = {
+  booked: "Activo",
+  cancelled: "Cancelado",
+} as const;

@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 
 import styles from "@/components/booking-page.module.css";
 import { BOOKING_CHANNEL, SOCIAL_LINKS, TIME_SLOTS } from "@/lib/constants";
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser";
-import type { Service, WeeklyAvailability } from "@/lib/types";
+import type { NailArea, Service, WeeklyAvailability } from "@/lib/types";
 
 type Props = {
   initialAvailability: WeeklyAvailability;
@@ -17,9 +17,11 @@ type Props = {
 type FormState = {
   firstName: string;
   lastName: string;
+  phoneNumber: string;
   date: string;
   timeSlot: string;
   serviceIds: string[];
+  nailArea: NailArea | null;
 };
 
 const EMPTY_MESSAGE = "Selecciona un horario disponible para empezar.";
@@ -62,14 +64,18 @@ export function BookingPage({
   services,
   isSupabaseConfigured,
 }: Props) {
+  const reservationRef = useRef<HTMLElement | null>(null);
+  const firstNameInputRef = useRef<HTMLInputElement | null>(null);
   const [availability, setAvailability] = useState(initialAvailability);
   const [message, setMessage] = useState(EMPTY_MESSAGE);
   const [formState, setFormState] = useState<FormState>({
     firstName: "",
     lastName: "",
+    phoneNumber: "",
     date: "",
     timeSlot: "",
     serviceIds: [],
+    nailArea: null,
   });
   const [isPending, startTransition] = useTransition();
 
@@ -115,20 +121,36 @@ export function BookingPage({
     () => availability.days.find((day) => day.date === formState.date),
     [availability.days, formState.date],
   );
+  const nailService = useMemo(
+    () => services.find((service) => service.slug === "unas") ?? null,
+    [services],
+  );
+  const hasNailServiceSelected = Boolean(
+    nailService && formState.serviceIds.includes(nailService.id),
+  );
 
   function selectSlot(date: string, timeSlot: string) {
     setFormState((current) => ({ ...current, date, timeSlot }));
-    setMessage("Completa tu nombre, apellido y servicios para confirmar.");
+    setMessage("Completa tu nombre, apellido, celular y servicios para confirmar.");
+    reservationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => {
+      firstNameInputRef.current?.focus();
+    }, 250);
   }
 
   function toggleService(serviceId: string) {
     setFormState((current) => {
       const exists = current.serviceIds.includes(serviceId);
+      const nextServiceIds = exists
+        ? current.serviceIds.filter((item) => item !== serviceId)
+        : [...current.serviceIds, serviceId];
+      const shouldClearNailArea =
+        nailService && !nextServiceIds.includes(nailService.id) ? null : current.nailArea;
+
       return {
         ...current,
-        serviceIds: exists
-          ? current.serviceIds.filter((item) => item !== serviceId)
-          : [...current.serviceIds, serviceId],
+        serviceIds: nextServiceIds,
+        nailArea: shouldClearNailArea,
       };
     });
   }
@@ -153,9 +175,11 @@ export function BookingPage({
         setFormState({
           firstName: "",
           lastName: "",
+          phoneNumber: "",
           date: "",
           timeSlot: "",
           serviceIds: [],
+          nailArea: null,
         });
         await refreshAvailability();
       }
@@ -297,7 +321,10 @@ export function BookingPage({
           ))}
         </section>
 
-        <section className={styles.panelCard}>
+        <section
+          className={`${styles.panelCard} ${formState.timeSlot ? styles.panelCardActive : ""}`}
+          ref={reservationRef}
+        >
           <div>
             <p className={styles.kicker}>Reservar cita</p>
             <h2 className={styles.sectionTitle}>Completa tu reserva</h2>
@@ -306,6 +333,12 @@ export function BookingPage({
               servicios que deseas para asegurar tu espacio.
             </p>
           </div>
+
+          {formState.date && formState.timeSlot ? (
+            <div className={styles.selectedSlotSummary}>
+              Reservando para el {formState.date} a las {formState.timeSlot}.
+            </div>
+          ) : null}
 
           {!isSupabaseConfigured ? (
             <div className={styles.notice}>
@@ -319,6 +352,7 @@ export function BookingPage({
               <label className={styles.field}>
                 <span>Nombre</span>
                 <input
+                  ref={firstNameInputRef}
                   onChange={(event) =>
                     setFormState((current) => ({
                       ...current,
@@ -343,6 +377,22 @@ export function BookingPage({
                   placeholder="Perez"
                   required
                   value={formState.lastName}
+                />
+              </label>
+
+              <label className={styles.field}>
+                <span>Celular</span>
+                <input
+                  onChange={(event) =>
+                    setFormState((current) => ({
+                      ...current,
+                      phoneNumber: event.target.value,
+                    }))
+                  }
+                  placeholder="71234567"
+                  required
+                  type="tel"
+                  value={formState.phoneNumber}
                 />
               </label>
 
@@ -417,6 +467,30 @@ export function BookingPage({
                   ))}
                 </div>
               </fieldset>
+
+              {hasNailServiceSelected ? (
+                <fieldset className={styles.nailAreaField}>
+                  <span>¿Uñas para manos o pies?</span>
+                  <div className={styles.nailAreaGrid}>
+                    {(["manos", "pies"] as const).map((area) => (
+                      <label className={styles.nailAreaOption} key={area}>
+                        <input
+                          checked={formState.nailArea === area}
+                          onChange={() =>
+                            setFormState((current) => ({
+                              ...current,
+                              nailArea: area,
+                            }))
+                          }
+                          name="nail-area"
+                          type="radio"
+                        />
+                        <span>{area === "manos" ? "Manos" : "Pies"}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ) : null}
             </div>
 
             <div className={styles.actions}>

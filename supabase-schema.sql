@@ -13,13 +13,28 @@ create table if not exists public.appointments (
   id uuid primary key default gen_random_uuid(),
   first_name text not null,
   last_name text not null,
+  phone_number text not null default '',
   appointment_date date not null,
   time_slot text not null check (time_slot in ('09:00', '11:00', '13:00', '15:00')),
   status text not null default 'booked' check (status in ('booked', 'cancelled')),
+  nail_area text,
   week_start date not null,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.appointments
+  add column if not exists phone_number text not null default '';
+
+alter table public.appointments
+  add column if not exists nail_area text;
+
+alter table public.appointments
+  drop constraint if exists appointments_nail_area_check;
+
+alter table public.appointments
+  add constraint appointments_nail_area_check
+  check (nail_area in ('manos', 'pies') or nail_area is null);
 
 create table if not exists public.appointment_services (
   appointment_id uuid not null references public.appointments(id) on delete cascade,
@@ -74,8 +89,8 @@ using (true);
 
 insert into public.services (slug, name, accent_color, sort_order)
 values
-  ('unas', 'Unas', '#f28cb4', 1),
-  ('pestanas', 'Pestanas', '#f7b267', 2),
+  ('unas', 'Uñas', '#f28cb4', 1),
+  ('pestanas', 'Pestañas', '#f7b267', 2),
   ('cejas', 'Cejas', '#9ac7b8', 3)
 on conflict (slug) do update
 set

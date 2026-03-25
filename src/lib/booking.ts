@@ -14,6 +14,7 @@ import type {
   AdminAppointmentUpdateInput,
   Appointment,
   AppointmentCreateInput,
+  NailArea,
   Service,
   WeeklyAvailability,
 } from "@/lib/types";
@@ -22,9 +23,11 @@ type AppointmentRow = {
   id: string;
   first_name: string;
   last_name: string;
+  phone_number: string;
   appointment_date: string;
   time_slot: string;
   status: "booked" | "cancelled";
+  nail_area: NailArea | null;
   created_at: string;
   updated_at: string;
 };
@@ -53,10 +56,17 @@ function normalizeService(row: {
   name: string;
   accent_color: string;
 }): Service {
+  const normalizedName =
+    row.slug === "unas"
+      ? "Uñas"
+      : row.slug === "pestanas"
+        ? "Pestañas"
+        : row.name;
+
   return {
     id: row.id,
     slug: row.slug,
-    name: row.name,
+    name: normalizedName,
     accentColor: row.accent_color,
   };
 }
@@ -66,21 +76,32 @@ function normalizeAppointment(row: AppointmentRow, services: Service[]): Appoint
     id: row.id,
     firstName: row.first_name,
     lastName: row.last_name,
+    phoneNumber: row.phone_number,
     date: row.appointment_date,
     timeSlot: row.time_slot,
     status: row.status,
+    nailArea: row.nail_area,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     services,
   };
 }
 
-function validateInput(input: AppointmentCreateInput) {
+function validateInput(input: AppointmentCreateInput, services: Service[]) {
   const firstName = input.firstName.trim();
   const lastName = input.lastName.trim();
+  const phoneNumber = input.phoneNumber.trim();
+  const phoneDigits = phoneNumber.replace(/\D/g, "");
+  const availableServiceIds = new Set(services.map((service) => service.id));
+  const nailService = services.find((service) => service.slug === "unas");
+  const includesNails = nailService ? input.serviceIds.includes(nailService.id) : false;
 
   if (!firstName || !lastName) {
     return "Ingresa nombre y apellido.";
+  }
+
+  if (phoneDigits.length < 8) {
+    return "Ingresa un número de celular válido.";
   }
 
   if (!TIME_SLOTS.some((slot) => slot.value === input.timeSlot)) {
@@ -89,6 +110,14 @@ function validateInput(input: AppointmentCreateInput) {
 
   if (!input.serviceIds.length) {
     return "Selecciona al menos un servicio.";
+  }
+
+  if (input.serviceIds.some((serviceId) => !availableServiceIds.has(serviceId))) {
+    return "Selecciona servicios válidos.";
+  }
+
+  if (includesNails && !input.nailArea) {
+    return "Indica si las uñas serán para manos o pies.";
   }
 
   if (!isReservableDate(input.date, APP_TIME_ZONE)) {
@@ -182,7 +211,9 @@ export async function getAdminAppointments() {
 
   const { data, error } = await supabase
     .from("appointments")
-    .select("id, first_name, last_name, appointment_date, time_slot, status, created_at, updated_at")
+    .select(
+      "id, first_name, last_name, phone_number, appointment_date, time_slot, status, nail_area, created_at, updated_at",
+    )
     .gte("appointment_date", weekStart)
     .lte("appointment_date", weekEnd)
     .order("appointment_date", { ascending: true })
@@ -198,7 +229,8 @@ export async function getAdminAppointments() {
 }
 
 export async function createAppointment(input: AppointmentCreateInput): Promise<ActionResult> {
-  const validationError = validateInput(input);
+  const services = await fetchServicesFromDatabase();
+  const validationError = validateInput(input, services);
 
   if (validationError) {
     return { ok: false, message: validationError };
@@ -218,9 +250,11 @@ export async function createAppointment(input: AppointmentCreateInput): Promise<
     .insert({
       first_name: input.firstName.trim(),
       last_name: input.lastName.trim(),
+      phone_number: input.phoneNumber.trim(),
       appointment_date: input.date,
       time_slot: input.timeSlot,
       status: APPOINTMENT_STATUSES.booked,
+      nail_area: input.nailArea,
       week_start: getActiveWeekRange(APP_TIME_ZONE).weekStart,
     })
     .select("id")
@@ -258,7 +292,8 @@ export async function updateAppointment(
   appointmentId: string,
   input: AdminAppointmentUpdateInput,
 ): Promise<ActionResult> {
-  const validationError = validateInput(input);
+  const services = await fetchServicesFromDatabase();
+  const validationError = validateInput(input, services);
 
   if (validationError) {
     return { ok: false, message: validationError };
@@ -275,9 +310,11 @@ export async function updateAppointment(
     .update({
       first_name: input.firstName.trim(),
       last_name: input.lastName.trim(),
+      phone_number: input.phoneNumber.trim(),
       appointment_date: input.date,
       time_slot: input.timeSlot,
       status: input.status,
+      nail_area: input.nailArea,
       week_start: getActiveWeekRange(APP_TIME_ZONE).weekStart,
     })
     .eq("id", appointmentId);
